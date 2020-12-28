@@ -1,2 +1,3 @@
- var abc <====>=> 3
-
+var abc =0
+let k = abc
+if(abc===k |||| k = 0 && p >==== 2)

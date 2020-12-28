@@ -38,7 +38,7 @@ exports.wordBreak = (readFile) => {
                 temp = "";
                 // }
             }
-            if (isEqualArr.includes(readFile[i]) && !flagEquals) {
+            if (isEqualArr.includes(readFile[i])) {
                 // if (!readFile[i - 1] === '+' || !readFile[i - 1] === '*') {
                     temp += readFile[i]
                     // Verifying how many = are written.
@@ -146,34 +146,25 @@ exports.wordBreak = (readFile) => {
                 }
             }
             if (relationalOperatorsArr.includes(readFile[i])) {
-                console.log('relational ops')
                 if (readFile[i] === '!') {
                     temp += readFile[i]
-                    // console.log("temp",temp)
-                    // console.log(readFile[i],i)
                     if (readFile[i + 1] === '=') {
                         console.log(readFile[i + 1], i + 1)
                         temp += readFile[i + 1]
-                        // console.log("temp",temp)
-                        i + 2;
-                        var flagEquals = true;
-                        // console.log(temp)
+                        i = i + 1;
                     }
                 } else if (readFile[i] === '|') {
                     temp += readFile[i]
-                    // console.log(temp)
                     if (readFile[i + 1] === '|') {
                         temp += readFile[i + 1]
-                        i + 2;
-                        // console.log(temp)
+                        i = i + 1;
                     }
                 } else if (readFile[i] === '&') {
-                    console.log(readFile[i], i)
                     temp += readFile[i]
                     // console.log(temp)
                     if (readFile[i + 1] === '&') {
                         temp += readFile[i + 1]
-                        i + 2;
+                        i = i + 1;
                     }
                 }
             }
