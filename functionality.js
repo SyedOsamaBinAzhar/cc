@@ -178,7 +178,6 @@ exports.wordBreak = (readFile) => {
                 }
             }
             if (greaterThan.includes(readFile[i])) {
-                // console.log('greater than ops');
                 temp += readFile[i]
                 // console.log(temp)
                 if (readFile[i + 1] === '=') {
