@@ -38,6 +38,26 @@ exports.wordBreak = (readFile) => {
                 temp = "";
                 // }
             }
+            if (isEqualArr.includes(readFile[i]) && !flagEquals) {
+                // if (!readFile[i - 1] === '+' || !readFile[i - 1] === '*') {
+                    temp += readFile[i]
+                    // Verifying how many = are written.
+                    // Local flag to verify if = count is finshied
+                    var localflag = true
+                    // Looping
+                    for (var p = i + 1; localflag; p++) {
+                        if (readFile[p] === '=') {
+                            temp += readFile[p]
+                        } else {
+                            wordsArr.push(temp);
+                            temp = ""
+                            i = p - 1
+                            break
+                        }
+                    }
+
+                // }
+            }
             if (arithematicOperatorsArr.includes(readFile[i])) {
                 // Checking if +
                 if (readFile[i] === '+') {
@@ -49,24 +69,7 @@ exports.wordBreak = (readFile) => {
                         temp = ""
                     }
 
-                    // Verifying how many = are written.
-                    // Local flag to verify if = count is finshied
-                    // var localflag = true
-                    // Looping
-                    // for (var p = i + 1; localflag; p++) {
-                    //     if (readFile[p] === '+'||readFile[p] === '=') {
-                    //         temp += readFile[p]
-                    //     } else {
-                    //         wordsArr.push(temp);
-                    //         temp = ""
-                    //         i = p - 1
-                    //         break
-                    //     }
-                    // }
-
-                }
-                // If -
-                else if (readFile[i] === '-') {
+                } else if (readFile[i] === '-') {
                     temp += readFile[i]
                     if (readFile[i + 1] === '-' || readFile[i + 1] === '=') {
                         temp += readFile[i + 1];
@@ -91,64 +94,56 @@ exports.wordBreak = (readFile) => {
                     //     i++;
 
                     // }
-                }
-
-                // }
-                else if (readFile[i] === '*') {
-                    temp += readFile[i]
+                } else if (readFile[i] === '*') {
+                    // Multiline comments
                     if ((readFile[i + 1] === '/') || (readFile[i - 1] === '/')) {
                         temp += readFile[i];
                         temp = ""
                     }
+                    // Multiplication
                     if (readFile[i + 1] === '=') {
+                        temp += readFile[i]
                         temp += readFile[i + 1]
-                        i++;
+                        i = i + 1;
+                        wordsArr.push(temp)
+                        temp = ""
                     }
                 } else if (readFile[i] === '/') {
                     if (readFile[i + 1] === '/') {
-                        for(var p=i+2;true;p++)
-                        {
-                            if(lineBreaker.includes(readFile[p]))
-                            {
+                        // Single line comment
+                        for (var p = i + 2; true; p++) {
+                            if (lineBreaker.includes(readFile[p])) {
                                 // Remove all
                                 temp = ""
                                 // Set index, p-1 because i will be incremented at for loop
-                                i=p-1
+                                i = p - 1
                                 break;
                             }
                         }
-                        // temp += readFile[i + 1]
-                        // i++;
+                    } else if ((readFile[i + 1] === '=')) {
+                        temp += readFile[i]
+                        temp += readFile[i + 1]
+                        i = i + 1;
+                        wordsArr.push(temp)
+                        temp = ""
+                    } else {
+                        temp += readFile[i]
+                        wordsArr.push(temp)
+                        temp = ""
                     }
-                    //for COMMENTS
-                    // if (readFile[i + 1] === '*') {
-                    //     temp += readFile[i + 1];
-                    //     p = i + 2;
-                    //     while (p < readFile.length) {
-                    //         if ((readFile[p] === '*') && (readFile[p + 1] === '/')) {
-                    //             console.log('whileStart')
-
-                    //             temp += readFile[p];
-                    //             temp += readFile[p + 1];
-                    //             console.log("Iftemp", temp)
-                    //             temp = ""
-                    //             console.log("emptyTemp", temp)
-                    //             break;
-                    //         } else {
-                    //             temp += readFile[p];
-                    //             console.log("temp", temp)
-                    //             p++;
-                    //             temp = ""
-                    //         }
-                    //     }
-                    // }
                 } else if (readFile[i] === '%') {
                     if (readFile[i + 1] === '=') {
+                        temp += readFile[i]
                         temp += readFile[i + 1]
-                        i++;
+                        i = i + 1;
+                        wordsArr.push(temp)
+                        temp = ""
+                    } else {
+                        temp += readFile[i]
+                        wordsArr.push(temp)
+                        temp = ""
                     }
                 }
-                var flag = true;
             }
             if (relationalOperatorsArr.includes(readFile[i])) {
                 console.log('relational ops')
@@ -179,11 +174,8 @@ exports.wordBreak = (readFile) => {
                     if (readFile[i + 1] === '&') {
                         temp += readFile[i + 1]
                         i + 2;
-                        // console.log(temp)
                     }
                 }
-                var flag = true;
-
             }
             if (greaterThan.includes(readFile[i])) {
                 // console.log('greater than ops');
@@ -196,29 +188,6 @@ exports.wordBreak = (readFile) => {
                     // console.log(temp)
                 }
                 var flag = true;
-
-            }
-            if (isEqualArr.includes(readFile[i]) && !flagEquals) {
-                if (readFile[i - 1] !== '+') {
-                    temp += readFile[i]
-                    // console.log(temp)
-                    // Verifying how many = are written.
-                    // Local flag to verify if = count is finshied
-                    var localflag = true
-                    // Looping
-                    for (var p = i + 1; localflag; p++) {
-                        if (readFile[p] === '=') {
-                            temp += readFile[p]
-                        } else {
-                            wordsArr.push(temp);
-                            temp = ""
-                            i = p - 1
-                            break
-                        }
-                    }
-
-                }
-
 
             }
             if (spaceArr.includes(readFile[i])) {
