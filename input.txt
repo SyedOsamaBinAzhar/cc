@@ -1,3 +1,1 @@
-var abc =0
-let k = abc
-if(abc===k |||| k = 0 && p >==== 2)
+class 233.456private ++ abc 4 private"osama"

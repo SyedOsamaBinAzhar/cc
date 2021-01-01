@@ -25,51 +25,71 @@
 //     console.log(temp)
 //     return wordsArr
 // }
-var temp=""
-var wordsArr=[]
-var plusFn=(readFile)=>{
-    for (var i = 0; i <= readFile.length; i++) {
-        console.log(i,readFile[i])
-        if(readFile[i]==='+'){
-            temp+=readFile[i];
-            console.log(i,"temp",temp)
-            p=i;
-            console.log('p=',p)
-            while((readFile[p+1]==='+')){
-                console.log('while start')
-                console.log('while P',p)
-                console.log('p+1',p+1);
-                temp+=readFile[p+1];
-                console.log("whileTemp",temp)
-                if(temp='++'){
-                    console.log('if two ++ true')
-                    wordsArr.push(temp);
-                    temp="";
-                }
-                p=p+2;
-            }
-        }
-        return wordsArr;
-    }
-}
+// var temp=""
+// var wordsArr=[]
+// var plusFn=(readFile)=>{
+//     for (var i = 0; i <= readFile.length; i++) {
+//         console.log(i,readFile[i])
+//         if(readFile[i]==='+'){
+//             temp+=readFile[i];
+//             console.log(i,"temp",temp)
+//             p=i;
+//             console.log('p=',p)
+//             while((readFile[p+1]==='+')){
+//                 console.log('while start')
+//                 console.log('while P',p)
+//                 console.log('p+1',p+1);
+//                 temp+=readFile[p+1];
+//                 console.log("whileTemp",temp)
+//                 if(temp='++'){
+//                     console.log('if two ++ true')
+//                     wordsArr.push(temp);
+//                     temp="";
+//                 }
+//                 p=p+2;
+//             }
+//         }
+//         return wordsArr;
+//     }
+// }
 
 
 // Requiring fs module in which  
 // readFile function is defined. 
-const fs = require('fs')
-var readFile;
-fs.readFile('./input.txt', (err, data) => {
-    if (err) throw err;
-    readFile = data.toString()
-    // console.log(readFile)
-    // console.log(
-    //     stringSeparator(readFile)
-    // );
-console.log(
-    plusFn(readFile)
+// const fs = require('fs')
+// var readFile;
+// fs.readFile('./input.txt', (err, data) => {
+//     if (err) throw err;
+//     readFile = data.toString()
+//     // console.log(readFile)
+//     // console.log(
+//     //     stringSeparator(readFile)
+//     // );
+// console.log(
+//     plusFn(readFile)
 
-)
+// )
     // var wordsArr=wordBreak(readFile)
     // console.log(wordsArr)
     // checkKeyword(wordsArr);
-})
+// })
+
+
+
+// let identifierRegex = /^[A-Za-z]+$/;
+// var result=identifierRegex.test(4);
+// console.log(result)
+
+// var regex = /^[-+]?\d+$/;
+// var result=regex.test(0.1);
+// console.log(result)
+
+// var regex = /^[+-]?\d+$/;
+// var doubleRegex=/^[+-]?\d*[.]{1}\d+$/
+// var result=regex.test(-2343.34656);
+// console.log(result)'
+
+// var stringRegex=/"@^[""](\W|\w)*[""]$"/
+// var result=stringRegex.test('osama');
+// console.log(result)
+

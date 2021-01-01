@@ -1,7 +1,7 @@
 var temp = "";
 var wordsArr = [];
 const lineBreaker = ['\n', '\r']
-const wordBreakersArr = ['[', ']', '(', ')', ' ', '+', '-', '/', '*', '%', '{', '}', '!', ',', '=', ':', '\n', '\r', '#', '@', '&', '-', '_', '.', '\\', '"', '^', '`', '|', '>', '<'];
+const wordBreakersArr = ['[', ']', '(', ')', ' ', '+', '-', '/', '*', '%', '{', '}', '!', ',', '=', ':', '\n', '\r', '#', '@', '&', '-', '_','\\', '"', '^', '`', '|', '>', '<'];
 const arithematicOperatorsArr = ['+', '-', '/', '*', '%'];
 const relationalOperatorsArr = ['!', '|', '&'];
 const isEqualArr = ['=']
@@ -9,14 +9,11 @@ const greaterThan = ['>', '<']
 const spaceArr = [' ']
 const stringArr = ['"']
 const multiLineCommentArr = ['/', '*']
+const BracketsArr=['(',')','[',']','{','}']
 var count = 0
 let lastWordCount;
 
-// var pushTempInArray=(temp)=>{
-// wordsArr.push(temp);
-// temp="";
-// return temp;
-// }
+
 
 exports.wordBreak = (readFile) => {
     for (var i = 0; i <= readFile.length; i++) {
@@ -199,9 +196,17 @@ exports.wordBreak = (readFile) => {
                         temp += readFile[i]
                     }
                 }
-                console.log(temp)
                 wordsArr.push(temp)
+                temp="";
             }
+            if(BracketsArr.includes(readFile[i])){
+                temp+=readFile[i]
+                wordsArr.push(temp);
+                temp=""
+            }
+            //if full stop then check ke . se pehle numbers hain ya nai aur dot k baad numbers hain ya nai
+            //if yes then store in array
+            //if no then ask arooba
 
         } else if (!flag) {
             if ((readFile[i - 1] === '*') && (readFile[i - 2] === '/')) {
