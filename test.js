@@ -93,3 +93,6 @@
 // var result=stringRegex.test('osama');
 // console.log(result)
 
+// const stringregex = /^[A-Za-z]+$/
+// var result=stringregex.test(123);
+// console.log(result)

@@ -286,12 +286,6 @@ var checkIdentifier=(word)=>{
             tokenArr.push(tokenObj)
             return result;
         }
-        if(!result){
-            // console.log(word)
-            // console.log("hi2")
-            result="undefined";
-            return result;
-        }
 }
 
 var checkInteger=(word)=>{
@@ -307,12 +301,7 @@ var checkInteger=(word)=>{
         tokenArr.push(tokenObj)
         return result;
     }
-    if(!result){
-        // console.log(word)
-        // console.log("hi2")
-        result="undefined";
-        return result;
-    }
+
 }
   
 var checkDouble=(word)=>{
@@ -337,7 +326,18 @@ if(!result){
 }
 
 //check string ka function krna hai like above functions
-var checkString=(word)=>{}
+var checkString=(word)=>{
+    var result = stringregex.test(word)
+    console.log("String Result ", word)
+    // console.log(" = "+word)
+
+    var tokenObj={
+        class:"string",
+        word:word
+    }
+    tokenArr.push(tokenObj)
+    return result;
+}
 //check char ka function krna hai like above functions
 var checkChar=(word)=>{}
 
@@ -371,12 +371,12 @@ fs.readFile('./input.txt', (err, data) => {
               if(typeof(punctuator) === "undefined"){
                         var identifier=checkIdentifier(word)
                         console.log("ID",identifier)
-                        if(identifier == "undefined"){
+                        if(typeof(identifier) == "undefined"){
                         var integer=checkInteger(word)
                         console.log("integer",integer)
-                            if(integer == "undefined"){
-                            var double=checkDouble(word)
-                            //call checkString here
+                            if(typeof(integer) == "undefined"){
+                            var string = checkString(word)
+                            // TODO:
                             }
                         }
               }
