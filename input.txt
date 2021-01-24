@@ -1,1 +1,1 @@
-class 233.456private ++ abc 4 private"osama"
+class private ++ abc 4 private"osama"

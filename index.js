@@ -215,13 +215,12 @@ const punctuatorDictionary = [{
 
 
 
-
 let identifierRegex = /^[A-Za-z]+$/;
 let integerRegex= /^[-+]?\d+$/;
 let doubleRegex=/^[+-]?\d*[.]{1}\d+$/
 const doubleregex = ""
 const charregex = ""
-const stringregex = ""
+const stringregex = /^[A-Za-z]+$/
 
 
 
@@ -229,12 +228,13 @@ const stringregex = ""
 var checkKeyword=(word)=>{
     for(var x=0;x<keywordDictionary.length;x++){
         if(keywordDictionary[x].word===word){
+            console.log("checkkeyword = "+word)
             var TokenObj={
                 class: keywordDictionary[x].class,
                 word: keywordDictionary[x].word,
             }
             tokenArr.push(TokenObj)
-        console.log(tokenArr)
+        // console.log(tokenArr)
         return true
         }
     }
@@ -244,12 +244,13 @@ var checkOperator = (word) => {
         // TODO:
         for(var x=0;x<operatorDictionary.length;x++){
             if(operatorDictionary[x].word===word){
+            console.log("checkOperator = "+word)
                 var keywordTokenObj={
                     class: operatorDictionary[x].class,
                     word: operatorDictionary[x].word
                 }
                 tokenArr.push(keywordTokenObj)
-                console.log("checkOper",tokenArr)
+                // console.log("checkOper",tokenArr)
                 return true
             }
         }
@@ -259,12 +260,14 @@ var checkPunctuator = (word) => {
         // TODO:
         for(var x=0;x<punctuatorDictionary.length;x++){
             if(punctuatorDictionary[x].word===word){
+            console.log("checkPunc = "+word)
+                
                 var keywordTokenObj={
                     class: punctuatorDictionary[x].class,
                     word: punctuatorDictionary[x].word,
                 }
                 tokenArr.push(keywordTokenObj)
-                console.log("checkOper",tokenArr)
+                // console.log("checkOper",tokenArr)
             }
         }
 }
@@ -273,7 +276,9 @@ var checkIdentifier=(word)=>{
         var result=identifierRegex.test(word);
      
         if(result){
-            console.log("hi1")
+            // console.log("hi1")
+            console.log("checkID = "+word)
+
             var tokenObj={
                 class:"identifier",
                 word:word
@@ -282,8 +287,8 @@ var checkIdentifier=(word)=>{
             return result;
         }
         if(!result){
-            console.log(word)
-            console.log("hi2")
+            // console.log(word)
+            // console.log("hi2")
             result="undefined";
             return result;
         }
@@ -291,9 +296,10 @@ var checkIdentifier=(word)=>{
 
 var checkInteger=(word)=>{
     var result=integerRegex.test(word);
-    console.log(result,word)
     if(result){
-        console.log("hi1")
+        // console.log("hi1")
+        console.log("checkInt = "+word)
+
         var tokenObj={
             class:"integer",
             word:word
@@ -302,8 +308,8 @@ var checkInteger=(word)=>{
         return result;
     }
     if(!result){
-        console.log(word)
-        console.log("hi2")
+        // console.log(word)
+        // console.log("hi2")
         result="undefined";
         return result;
     }
@@ -316,12 +322,15 @@ if(result){
         class:"double",
         word:word
     }
+    console.log("checkDouble")
     tokenArr.push(tokenObj)
+    // console.log(tokenArr,"")
     return result;
+
 }
 if(!result){
-    console.log(word)
-    console.log("hi2")
+    // console.log(word)
+    // console.log("hi2")
     result="undefined";
     return result;
 }
@@ -343,21 +352,28 @@ fs.readFile('./input.txt', (err, data) => {
     readFile = data.toString()
     // console.log(readFile)
     var wordsArr = wordBreak(readFile)
+    console.log("*******************wordsArr*************")
     console.log(wordsArr)
+    console.log("********************************")
+
     wordsArr.forEach((word =>{
           var keyword=checkKeyword(word)
           console.log("keyword",keyword)
+        //   checking keyword
           if(typeof(keyword) === "undefined"){
               var operator=checkOperator(word)
               console.log("operator",operator)
+              //checking operator
               if(typeof(operator) === "undefined"){
+                  //checking punctuator
                   var punctuator=checkPunctuator(word)
+              console.log("punctuator",punctuator)
               if(typeof(punctuator) === "undefined"){
                         var identifier=checkIdentifier(word)
-                        console.log(identifier)
+                        console.log("ID",identifier)
                         if(identifier == "undefined"){
                         var integer=checkInteger(word)
-                        console.log("integer",word)
+                        console.log("integer",integer)
                             if(integer == "undefined"){
                             var double=checkDouble(word)
                             //call checkString here
@@ -368,6 +384,9 @@ fs.readFile('./input.txt', (err, data) => {
               }
           } 
     }))
+
+console.log("tokenArr",tokenArr)
+
 })
 
 
