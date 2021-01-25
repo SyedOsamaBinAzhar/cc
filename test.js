@@ -94,5 +94,14 @@
 // console.log(result)
 
 // const stringregex = /^[A-Za-z]+$/
-// var result=stringregex.test(123);
+// var result=stringregex.test(243.45);
+// console.log(result)
+
+
+let identifierRegex = /^[A-Za-z]+$/;
+var result=identifierRegex.test("abc.obj")
+console.log(result)
+
+// const stringregex = /^[A-Za-z]+$/
+// var result=stringregex.test("abc.obj")
 // console.log(result)
