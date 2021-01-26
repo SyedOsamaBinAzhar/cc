@@ -1,6 +1,6 @@
 var temp = "";
 var wordsArr = [];
-const lineBreaker = ['\n', '\r']
+const lineChangeBreaker = ['\n', '\r']
 const wordBreakersArr = ['[', ']', '(', ')', ' ', '+', '-', '/', '*', '%', '{', '}', '!', ',', '=', ':', '\n', '\r\n', '#', '@', '&', '-', '_','\\', '"', '^', '`', '|', '>', '<'];
 const arithematicOperatorsArr = ['+', '-', '/', '*', '%'];
 const relationalOperatorsArr = ['!', '|', '&'];
@@ -10,18 +10,23 @@ const spaceArr = [' '];
 const stringArr = ['"'];
 const multiLineCommentArr = ['/', '*'];
 const BracketsArr=['(',')','[',']','{','}'];
-const newLineBreakerArr=['\r\n'];
-const dotArr=['.'];
+const newLineBreakerArr=['\r'];
+const otherBreakersArr=[':','#','@','_','^']
+// const dotArr=['.'];
 
 
+const newLineReg= /\r?\n|\r/;
 
-var count = 0
-let lastWordCount;
+var newLineFlag=true;
+
+var temporary;
+
 
 
 
 exports.wordBreak = (readFile) => {
     for (var i = 0; i <= readFile.length; i++) {
+        // console.log(readFile[i])
         var flag = false;
         // console.log(readFile[i])
         // This was saving spaces as well
@@ -42,22 +47,42 @@ exports.wordBreak = (readFile) => {
                 // }
             }
             if (isEqualArr.includes(readFile[i])) {
+                // console.log("isEquals",readFile[i])
                 // if (!readFile[i - 1] === '+' || !readFile[i - 1] === '*') {
                     temp += readFile[i]
+                    if(readFile[i+1]==="=" && readFile[i+2]==="=" ){
+                        temp+=readFile[i+1];
+                        temp+=readFile[i+2];
+                        wordsArr.push(temp);
+                        temp=""
+                        i=i+2;
+                    }
+                    if(readFile[i+1]==="=" && readFile[i+2]!=="=" ){
+                        temp+=readFile[i+1];
+                        // temp+=readFile[i+2];
+                        wordsArr.push(temp);
+                        temp=""
+                        i=i+1;
+                    }
+                    if(readFile[i+1]!=="="){
+                        wordsArr.push(temp);
+                        temp=""
+                    }
+
                     // Verifying how many = are written.
                     // Local flag to verify if = count is finshied
-                    var localflag = true
+                    // var localflag = true
                     // Looping
-                    for (var p = i + 1; localflag; p++) {
-                        if (readFile[p] === '=') {
-                            temp += readFile[p]
-                        } else {
-                            wordsArr.push(temp);
-                            temp = ""
-                            i = p - 1
-                            break
-                        }
-                    }
+                    // for (var p = i + 1; localflag; p++) {
+                    //     if (readFile[p] === '=') {
+                    //         temp += readFile[p]
+                    //     } else {
+                    //         wordsArr.push(temp);
+                    //         temp = ""
+                    //         i = p - 1
+                    //         break
+                    //     }
+                    // }
 
                 // }
             }
@@ -209,29 +234,13 @@ exports.wordBreak = (readFile) => {
                 wordsArr.push(temp);
                 temp=""
             }
-            // if(dotArr.includes(readFile[i])){
-            //     // console.log("dot",readFile[i])
-            //     // console.log("Dot function")
-            //     // var counter=i+1;
-            //     for(var counter=i+1;i<readFile.length;counter++){
-            //         if(wordBreakersArr.includes(readFile[counter])){
-            //             break;
-            //         }
-            //         temp+=readFile[counter];
-            //     }
-            //     wordsArr.push(temp)
-            //     i=counter;
-            //     temp="";
-            // }
+            if(otherBreakersArr.includes(readFile[i])){
+                temp+=readFile[i]
+                wordsArr.push(temp);
+                temp=""
+            }
 
             
-            // if(newLineBreakerArr.includes(readFile[i])){
-            //     console.log("-------------------------------"+readFile[i],readFile[i+1],readFile[i+2],readFile[i+3]);
-            // }
-            //if full stop then check ke . se pehle numbers hain ya nai aur dot k baad numbers hain ya nai
-            //if yes then store in array
-            //if no then ask arooba
-
 
         } else if (!flag) {
             if ((readFile[i - 1] === '*') && (readFile[i - 2] === '/')) {
@@ -247,7 +256,33 @@ exports.wordBreak = (readFile) => {
                 }
             } else {
                 // console.log("temp",temp)
+        // var result=newLineReg.test(word)
+
+                
                 temp += readFile[i];
+            //     temp.replace('\r','');
+            //      console.log(temp)
+            // if(temp.includes("\r")){
+            //     console.log("word22",temp)
+            // }
+                // if(temp.includes("\r")){
+                //     console.log("temp",temp)
+                // temp.replace('\r','');
+                // console.log()
+
+                // }
+                // temp.replace('\r','');
+                // console.log("temp",temp)
+                // temporary+=temp;
+                // if(newLineReg.test(temp)){
+                //     console.log("true",temp)
+                //     temp="";
+                //     console.log("secondTemp",temp)
+                //     }
+                // if(readFile[i+1]==="\r"){
+                    
+                // }
+                // console.log("temp",temp)
             }
         }
     }

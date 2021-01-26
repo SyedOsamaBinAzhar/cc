@@ -98,10 +98,29 @@
 // console.log(result)
 
 
-let identifierRegex = /^[A-Za-z]+$/;
-var result=identifierRegex.test("abc.obj")
-console.log(result)
-
-// const stringregex = /^[A-Za-z]+$/
-// var result=stringregex.test("abc.obj")
+// let identifierRegex = /^[A-Za-z]+$/;
+// var result=identifierRegex.test("abc.obj")
 // console.log(result)
+
+// const stringregex = /^"*[A-Za-z]*"+$/
+// var result=stringregex.test(`"abcobj"`)
+// console.log(result)
+
+// const newLineReg= /\r?\n|\r/;
+// // var result=newLineReg.test("osama123")
+// // console.log(result)
+// if(newLineReg.test("osama123")){
+// console.log("true")
+// }
+// else{
+// console.log("false")
+
+// }
+
+// var regex = /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{6,}$/g
+// var result=regex.test('osama12345677')
+// console.log(result)
+
+var mystring = "crtr2002_2";
+mystring = mystring.replace('\r','');
+console.log(mystring)

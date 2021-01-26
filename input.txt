@@ -1,1 +1,3 @@
-obj.abc "aasgf" and a
+var a==123
+osama is_ ++ good-- boy
+taimur "abc" "chu"-
