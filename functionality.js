@@ -1,5 +1,7 @@
 var temp = "";
-var wordsArr = [];
+var wordsArr = [];//Array to store my words
+
+//arrays for checking word breakers
 const lineChangeBreaker = ['\n', '\r']
 const wordBreakersArr = ['[', ']', '(', ')', ' ', '+', '-', '/', '*', '%', '{', '}', '!', ',', '=', ':', '\n', '\r\n', '#', '@', '&', '-', '_','\\', '"', '^', '`', '|', '>', '<'];
 const arithematicOperatorsArr = ['+', '-', '/', '*', '%'];
@@ -15,14 +17,16 @@ const otherBreakersArr=[':','#','@','_','^']
 // const dotArr=['.'];
 
 
-const newLineReg= /\r?\n|\r/;
+// const newLineReg= /\r?\n|\r/;
 
-var newLineFlag=true;
-
-var temporary;
+// var newLineFlag=true;
 
 
 
+//A function to read a txt file as a string.
+//This function breaks a word from string on the basis of spaces and word breakers
+//Plus it stores the words in wordsArr as well as the symbols.
+//We are treating symbols as word breakers and words as well
 
 exports.wordBreak = (readFile) => {
     for (var i = 0; i <= readFile.length; i++) {
@@ -34,8 +38,11 @@ exports.wordBreak = (readFile) => {
         //         wordsArr.push(temp);
         //         temp=""
         // }
-        // Will check what to read and what not to read
+
+        // Will check if the string contains a word breaker
         if (wordBreakersArr.includes(readFile[i])) {
+            //if yes then checks which word breaker is it.
+
             // Checking if temp is empty
             if (temp !== "") {
                 // if (temp === ' ') {
@@ -46,6 +53,7 @@ exports.wordBreak = (readFile) => {
                 temp = "";
                 // }
             }
+            //Using multiple arrays to check the word breaker
             if (isEqualArr.includes(readFile[i])) {
                 // console.log("isEquals",readFile[i])
                 // if (!readFile[i - 1] === '+' || !readFile[i - 1] === '*') {
@@ -241,8 +249,9 @@ exports.wordBreak = (readFile) => {
             }
 
             
-
+            //if there is not a word breaker
         } else if (!flag) {
+            //finishing comments and then dumping them
             if ((readFile[i - 1] === '*') && (readFile[i - 2] === '/')) {
                 var flagcom = false
                 // temp=""
@@ -254,7 +263,9 @@ exports.wordBreak = (readFile) => {
                         flagcom = true;
                     }
                 }
-            } else {
+            } 
+            //storing alphabets and number in temp
+            else {
                 // console.log("temp",temp)
         // var result=newLineReg.test(word)
 
@@ -286,5 +297,6 @@ exports.wordBreak = (readFile) => {
             }
         }
     }
+    //returning words arr to index.js where the words are further categorized and tokens are generated.
     return wordsArr
 }

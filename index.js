@@ -1,9 +1,12 @@
+//importing wordBreak function from functionality.js
 const {
     wordBreak
 } = require('./functionality')
 
+//An array to store my tokens
 var tokenArr = [];
 
+//Multiple dictionaries to check and categorize the operators /punctuators/keywords etc
 const keywordDictionary = [{
         class: "DataType",
         word: 'int'
@@ -111,13 +114,36 @@ const operatorDictionary = [{
         class: "MultiplyAssignment",
         word: '*='
     }
+    ,
+    {
+        class: "ComparisonOperators",
+        word: '=='
+    },
+    {
+        class: "ComparisonOperators",
+        word: '==='
+    },
+    {
+        class: "Assignment Operator",
+        word: '='
+    },
+    {
+        class: "Comparison Operator",
+        word: '>'
+    },
+    {
+        class: "Comparison Operator",
+        word: '<'
+    },
+    {
+        class: "Comparison Operator",
+        word: '=<'
+    },
+    {
+        class: "Comparison Operator",
+        word: '>='
+    }
 ]
-
-
-// TODO : Punctuator
-// TODO : Variable/Identitifier ----> Create Regex
-// TODO : Constant ----> Create Regex
-// RE:
 
 const punctuatorDictionary = [{
         class: "bracketops",
@@ -159,34 +185,6 @@ const punctuatorDictionary = [{
         class: "CompoundAssignment",
         word: '-='
     },
-    {
-        class: "ComparisonOperators",
-        word: '=='
-    },
-    {
-        class: "ComparisonOperators",
-        word: '==='
-    },
-    {
-        class: "Assignment Operator",
-        word: '='
-    },
-    {
-        class: "Comparison Operator",
-        word: '>'
-    },
-    {
-        class: "Comparison Operator",
-        word: '<'
-    },
-    {
-        class: "Comparison Operator",
-        word: '=<'
-    },
-    {
-        class: "Comparison Operator",
-        word: '>='
-    },
     
     {
         class: "Punctuator",
@@ -219,7 +217,7 @@ const punctuatorDictionary = [{
 ]
 
 
-
+//DEFINING RE's.
 let identifierRegex = /^[A-Za-z]+$/;
 let integerRegex = /^[-+]?\d+$/;
 let doubleRegex = /^[+-]?\d*[.]{1}\d+$/
@@ -231,6 +229,8 @@ var lineNumber=1;
 
 
 
+//The functions who check the current word using the RE's metnioned above
+//PS: Character RE is not performed.
 var checkKeyword = (word,lineNumber) => {
     for (var x = 0; x < keywordDictionary.length; x++) {
         if (keywordDictionary[x].word === word) {
@@ -331,6 +331,7 @@ var checkDouble = (word,lineNumber) => {
     }
 }
 
+
 // var checkNewLine = (word,lineNumber) => {
 //     const newLineReg= /\r?\n|\r/;
 //     var result=newLineReg.test(word)
@@ -370,11 +371,12 @@ var checkChar = (word) => {}
 
 const fs = require('fs')
 var readFile;
-var lineCount = 1;
+//reading .txt file
 fs.readFile('./input.txt', (err, data) => {
     if (err) throw err;
+
     readFile = data.toString()
-    // console.log(readFile)
+    //calling the imported function from functionality.js which returns words arr
     var wordsArr = wordBreak(readFile)
     console.log("*******************wordsArr*************")
     console.log(wordsArr)
@@ -388,6 +390,8 @@ fs.readFile('./input.txt', (err, data) => {
     console.log("********************************")
 
     wordsArr.forEach((word => {
+        //checking if the word contains \r
+        //.test method returns true or false.
         var result=newLineReg.test(word)
         if(result){
             // console.log(lineNumber++)
@@ -422,12 +426,11 @@ fs.readFile('./input.txt', (err, data) => {
             //     }
             // }
         }
+        //calling the functions to check each word that from which dictionary this word belongs to..
         var keyword = checkKeyword(word,lineNumber)
-        //   console.log("keyword",keyword,word),lineNumber
         //   checking keyword
         if (typeof (keyword) === "undefined") {
             var operator = checkOperator(word,lineNumber)
-            //   console.log("operator",operator)
             //checking operator
             if (typeof (operator) === "undefined") {
                 //checking punctuator
@@ -435,6 +438,7 @@ fs.readFile('./input.txt', (err, data) => {
                 //   console.log("punctuator",punctuator)
                 if (typeof (punctuator) === "undefined") {
                     var identifier = checkIdentifier(word,lineNumber)
+                    // console.log("worddd",word)
                     // console.log("ID",identifier)
                     if (typeof (identifier) == "undefined") {
                         var integer = checkInteger(word,lineNumber)
@@ -445,8 +449,16 @@ fs.readFile('./input.txt', (err, data) => {
                             if (typeof (double) === "undefined") {
                                 var string = checkString(word,lineNumber)
                                 // console.log("string",string)
-                                if (typeof (string) == "undefined") {
-                                    //TODO CHAR
+
+                                //Error is not working properly
+                                if (typeof (string) == "undefined"
+                                 && typeof (double) == "undefined" 
+                                 && typeof (punctuator) == "undefined" 
+                                 && typeof (identifier) == "undefined" 
+                                 && typeof (operator) == "undefined"
+                                 && typeof (integer) == "undefined") {
+                                    // console.log(`There is a lexical error in  line number + ${lineNumber}`,word)
+                                    
                                 }
                             }
                         }
@@ -457,6 +469,14 @@ fs.readFile('./input.txt', (err, data) => {
         }
     }))
 
+    //printing the generated tokens
     console.log("tokenArr", tokenArr)
     // console.log(lineCount)
 })
+
+//tasks left in lexical phase.
+//1) Char RE
+//2) Error reporting fixing
+//3) Removing newline character from words which is creating an issue
+
+
